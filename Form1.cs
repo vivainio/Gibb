@@ -9,12 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace gitz
+namespace Gibb
 {
     public partial class Form1 : Form
     {
         readonly GitModel _gitModel = new GitModel();
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -79,8 +79,8 @@ namespace gitz
                 update();
             }
 
-        }        
-       
+        }
+
         void BindEvents()
         {
             this.quickFilter.TextChanged += (o,e) =>  UpdateBranches();
@@ -108,7 +108,7 @@ namespace gitz
                 var curItem = this.statusList.SelectedItem as string;
                 StatusLineActivated(curItem, e.KeyCode);
             };
-               
+
         }
 
         void UpdateTitle()
@@ -121,7 +121,7 @@ namespace gitz
         private void Form1_Load(object sender, EventArgs e)
         {
             var argpath = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault();
-            var path = argpath != null && Directory.Exists(argpath) ? argpath : Directory.GetCurrentDirectory(); 
+            var path = argpath != null && Directory.Exists(argpath) ? argpath : Directory.GetCurrentDirectory();
             this.Text = "Gibb " + path;
             _gitModel.Populate(path);
             UpdateTitle();

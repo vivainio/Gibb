@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace gitz
+namespace Gibb
 {
     static class Program
     {
@@ -17,9 +17,9 @@ namespace gitz
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var mm = new GitModel();
-            
+
             Application.Run(new Form1());
-            
+
         }
     }
 }

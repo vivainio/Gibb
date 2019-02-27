@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace gitz.Properties
+namespace Gibb.Properties
 {
 
 
