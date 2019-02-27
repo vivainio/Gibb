@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 
 namespace gitz
@@ -38,21 +39,36 @@ namespace gitz
         {
         }
 
+        public string[] RunGit(string arg) =>         
+            Subproc.GetOutput("git", arg, Path).Split('\n');
+
         public string GetDiff(string fname)
             => Subproc.GetOutput("git", "diff --abbrev " + fname, Path);
         
+        public void UpdateStatus()
+        {
+            this.StatusLines = RunGit(GitStatus);
+
+        }
+
+        public void CheckoutBranch(string branchName)
+        {
+            Subproc.GetOutput("git", "checkout " + branchName, Path);
+            Populate(Path);
+        }
+
         public void Populate(string path)
         {
             this.Path = path;
-            this.Brances = Subproc.GetOutput("git", RecentBranches, path).Split('\n');
-            this.StatusLines = Subproc.GetOutput("git", GitStatus, path).Split('\n');
+
+            this.Brances = RunGit(RecentBranches);
+            UpdateStatus();
         }
 
-        public void Stage(string fname)
-        {
-            Subproc.GetOutput("git", "add " + fname, Path);
-        }
-
+        public void FileStage(string fname)
+            => RunGit("add " + fname);
+        public void FileUnstage(string fname) 
+            => RunGit("reset HEAD " + fname);
 
         public string Path { get; private set; }
         public string[] Brances { get; set; }

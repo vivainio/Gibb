@@ -34,17 +34,17 @@ namespace gitz
         }
         void UpdateStatusList()
         {
+            this.statusList.Items.Clear();
             foreach (var status in _gitModel.StatusLines)
             {
                 this.statusList.Items.Add(status);
             }
-
         }
 
         void SelectBranch(string branchName)
         {
-            // switch branch
-            ;
+            _gitModel.CheckoutBranch(branchName);
+            UpdateStatusList();
 
         }
 
@@ -61,11 +61,21 @@ namespace gitz
                 this.textArea.Text = diff;
                 return;
             }
+            void update()
+            {
+                _gitModel.UpdateStatus();
+                UpdateStatusList();
+            }
             if (key == Keys.S)
             {
                 // STAGE
-                ;
-
+                _gitModel.FileStage(fname);
+                update();
+            }
+            if (key == Keys.U)
+            {
+                _gitModel.FileUnstage(fname);
+                update();
             }
 
         }        
@@ -79,6 +89,8 @@ namespace gitz
                 {
                     var bn = this.branchList.SelectedItem as string;
                     SelectBranch(bn);
+                    var status = _gitModel.RunGit("status");
+                    this.textArea.Text = string.Join("\r\n", status);
                 }
 
             };
@@ -98,7 +110,7 @@ namespace gitz
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var path = "c:/p2p";
+            var path = "c:/r/1";
             _gitModel.Populate(path);
             UpdateBranches();
             UpdateStatusList();
