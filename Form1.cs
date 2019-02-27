@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -92,6 +93,7 @@ namespace gitz
                     SelectBranch(bn);
                     var status = _gitModel.RunGit("status");
                     this.textArea.Text = string.Join("\r\n", status);
+                    UpdateTitle();
                 }
 
             };
@@ -109,10 +111,20 @@ namespace gitz
                
         }
 
+        void UpdateTitle()
+        {
+            var path = _gitModel.Path;
+            var bname = _gitModel.RunGit("rev-parse --abbrev-ref HEAD")[0];
+            this.Text = $"Gibb {path} {bname}";
+
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
-            var path = "c:/r/1";
+            var argpath = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault();
+            var path = argpath != null && Directory.Exists(argpath) ? argpath : Directory.GetCurrentDirectory(); 
+            this.Text = "Gibb " + path;
             _gitModel.Populate(path);
+            UpdateTitle();
             UpdateBranches();
             UpdateStatusList();
             BindEvents();

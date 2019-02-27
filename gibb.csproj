@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8E384921-BF56-470C-B252-F6FC3D193F72}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>gitz</RootNamespace>
-    <AssemblyName>gitz</AssemblyName>
+    <RootNamespace>gibb</RootNamespace>
+    <AssemblyName>gibb</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
