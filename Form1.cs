@@ -41,10 +41,59 @@ namespace gitz
 
         }
 
+        void SelectBranch(string branchName)
+        {
+            // switch branch
+            ;
+
+        }
+
+        void StatusLineActivated(string statusLine, Keys? key)
+        {
+            if (String.IsNullOrWhiteSpace(statusLine))
+            {
+                return;
+            }
+            var fname = statusLine.Substring(3);
+            if (key == null)
+            {
+                var diff =  _gitModel.GetDiff(fname).Replace("\n", "\r\n");
+                this.textArea.Text = diff;
+                return;
+            }
+            if (key == Keys.S)
+            {
+                // STAGE
+                ;
+
+            }
+
+        }        
+       
         void BindEvents()
         {
             this.quickFilter.TextChanged += (o,e) =>  UpdateBranches();
+            this.branchList.KeyDown += (o,e) =>
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    var bn = this.branchList.SelectedItem as string;
+                    SelectBranch(bn);
+                }
 
+            };
+            this.statusList.SelectedIndexChanged += (o,e) =>
+            {
+                var curItem = this.statusList.SelectedItem as string;
+                StatusLineActivated(curItem, null);
+            };
+
+            this.statusList.KeyDown += (o,e) =>
+            {
+                var curItem = this.statusList.SelectedItem as string;
+                StatusLineActivated(curItem, e.KeyCode);
+            };
+               
         }
 
         private void Form1_Load(object sender, EventArgs e)

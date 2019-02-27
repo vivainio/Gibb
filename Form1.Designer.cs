@@ -68,7 +68,7 @@
             this.textArea.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textArea.Location = new System.Drawing.Point(527, 327);
+            this.textArea.Location = new System.Drawing.Point(527, 331);
             this.textArea.Multiline = true;
             this.textArea.Name = "textArea";
             this.textArea.Size = new System.Drawing.Size(412, 237);

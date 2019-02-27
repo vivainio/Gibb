@@ -2,27 +2,10 @@ using System.Diagnostics;
 
 namespace gitz
 {
-    public class GitModel
+
+    public static class Subproc
     {
-        private const string RecentBranches =
-            @"for-each-ref --count=200 --sort=-committerdate refs/heads/ --format=""%(refname:short)""";
-            
-        private const string GitStatus =
-            @"status -s";
-        public GitModel ()
-        {
-        }
-
-        public void Populate(string path)
-        {
-            this.Brances = GetOutput("git", RecentBranches, path).Split('\n');
-            this.StatusLines = GetOutput("git", GitStatus, path).Split('\n');
-        }
-
-        public string[] Brances { get; set; }
-        public string[] StatusLines { get; private set; }
-
-        static string GetOutput(string cmd, string args, string workdir)
+        public static string GetOutput(string cmd, string args, string workdir)
         {
             var p = new Process();
             var psi = p.StartInfo;
@@ -38,6 +21,42 @@ namespace gitz
             p.WaitForExit();
             return outp;
         }
+
+
+    }
+
+    public class GitModel
+    {
+        private const string RecentBranches =
+            @"for-each-ref --count=200 --sort=-committerdate refs/heads/ --format=""%(refname:short)""";
+            
+        private const string GitStatus =
+            @"status -s";
+        
+
+        public GitModel ()
+        {
+        }
+
+        public string GetDiff(string fname)
+            => Subproc.GetOutput("git", "diff --abbrev " + fname, Path);
+        
+        public void Populate(string path)
+        {
+            this.Path = path;
+            this.Brances = Subproc.GetOutput("git", RecentBranches, path).Split('\n');
+            this.StatusLines = Subproc.GetOutput("git", GitStatus, path).Split('\n');
+        }
+
+        public void Stage(string fname)
+        {
+            Subproc.GetOutput("git", "add " + fname, Path);
+        }
+
+
+        public string Path { get; private set; }
+        public string[] Brances { get; set; }
+        public string[] StatusLines { get; private set; }
 
     }
 }
