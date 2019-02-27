@@ -88,6 +88,7 @@ namespace gitz
                 if (e.KeyCode == Keys.Enter)
                 {
                     var bn = this.branchList.SelectedItem as string;
+                    this.textArea.Text = "Checking out: " + bn;
                     SelectBranch(bn);
                     var status = _gitModel.RunGit("status");
                     this.textArea.Text = string.Join("\r\n", status);
