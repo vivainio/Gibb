@@ -12,7 +12,7 @@ namespace gitz
 {
     public partial class Form1 : Form
     {
-        GitModel _gitModel = new GitModel();
+        readonly GitModel _gitModel = new GitModel();
         
         public Form1()
         {
@@ -21,7 +21,7 @@ namespace gitz
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            _gitModel.Populate();S
+            _gitModel.Populate();
             foreach (var branch in _gitModel.Brances)
             {
                 this.branchList.Items.Add(branch);
