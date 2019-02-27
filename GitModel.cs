@@ -32,7 +32,7 @@ namespace gitz
             psi.RedirectStandardOutput = true;
             psi.WorkingDirectory = workdir;
             psi.UseShellExecute = false;
-                
+            psi.CreateNoWindow = true;
             p.Start();
             var outp = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
