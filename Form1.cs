@@ -21,11 +21,16 @@ namespace gitz
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            _gitModel.Populate();
+            var path = "c:/p2p";
+            _gitModel.Populate(path);
             foreach (var branch in _gitModel.Brances)
             {
                 this.branchList.Items.Add(branch);
+            }
 
+            foreach (var status in _gitModel.StatusLines)
+            {
+                this.statusList.Items.Add(status);
             }
         }
     }

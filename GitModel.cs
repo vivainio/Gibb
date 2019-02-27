@@ -7,17 +7,20 @@ namespace gitz
         private const string RecentBranches =
             @"for-each-ref --count=200 --sort=-committerdate refs/heads/ --format=""%(refname:short)""";
             
+        private const string GitStatus =
+            @"status -s";
         public GitModel ()
         {
         }
 
-        public void Populate()
+        public void Populate(string path)
         {
-            this.Brances = GetOutput("git", RecentBranches, "c:/p2p").Split('\n');
-            
+            this.Brances = GetOutput("git", RecentBranches, path).Split('\n');
+            this.StatusLines = GetOutput("git", GitStatus, path).Split('\n');
         }
 
         public string[] Brances { get; set; }
+        public string[] StatusLines { get; private set; }
 
         static string GetOutput(string cmd, string args, string workdir)
         {
