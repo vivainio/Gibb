@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28606.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gibb", "gibb.csproj", "{8E384921-BF56-470C-B252-F6FC3D193F72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gibb", "Gibb\gibb.csproj", "{8E384921-BF56-470C-B252-F6FC3D193F72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
