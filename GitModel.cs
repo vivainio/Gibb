@@ -72,11 +72,11 @@ namespace Gibb
 
         public void FileRevert(string fname)
             => RunGit("checkout " + fname);
+        public void Commit() => RunGit("commit");
 
         public string Path { get; private set; }
         public string[] Brances { get; set; }
         public string[] StatusLines { get; private set; }
 
-        public void Commit() => RunGit("commit");
     }
 }
