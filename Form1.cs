@@ -79,23 +79,38 @@ namespace Gibb
                 update();
             }
 
+            if (key == Keys.R)
+            {
+                _gitModel.FileRevert(fname);
+                update();
+            }
+            if (key == Keys.C)
+            {
+                _gitModel.Commit();
+                update();
+            }
+
         }
 
+        void BranchActivated(string branchName, Keys key)
+        {
+            if (key == Keys.Enter)
+            {
+                this.textArea.Text = "Checking out: " + branchName;
+                SelectBranch(branchName);
+                var status = _gitModel.RunGit("status");
+                this.textArea.Text = string.Join("\r\n", status);
+                UpdateTitle();
+            }
+            
+        }
         void BindEvents()
         {
             this.quickFilter.TextChanged += (o,e) =>  UpdateBranches();
             this.branchList.KeyDown += (o,e) =>
             {
-                if (e.KeyCode == Keys.Enter)
-                {
-                    var bn = this.branchList.SelectedItem as string;
-                    this.textArea.Text = "Checking out: " + bn;
-                    SelectBranch(bn);
-                    var status = _gitModel.RunGit("status");
-                    this.textArea.Text = string.Join("\r\n", status);
-                    UpdateTitle();
-                }
-
+                var bn = this.branchList.SelectedItem as string;
+                BranchActivated(bn, e.KeyCode);
             };
             this.statusList.SelectedIndexChanged += (o,e) =>
             {
@@ -108,14 +123,13 @@ namespace Gibb
                 var curItem = this.statusList.SelectedItem as string;
                 StatusLineActivated(curItem, e.KeyCode);
             };
-
         }
 
         void UpdateTitle()
         {
             var path = _gitModel.Path;
             var bname = _gitModel.RunGit("rev-parse --abbrev-ref HEAD")[0];
-            this.Text = $"Gibb {path} {bname}";
+            this.Text = $"Gibb: {path} {bname}";
 
         }
         private void Form1_Load(object sender, EventArgs e)

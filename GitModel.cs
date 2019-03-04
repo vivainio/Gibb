@@ -70,9 +70,13 @@ namespace Gibb
         public void FileUnstage(string fname)
             => RunGit("reset HEAD " + fname);
 
+        public void FileRevert(string fname)
+            => RunGit("checkout " + fname);
+
         public string Path { get; private set; }
         public string[] Brances { get; set; }
         public string[] StatusLines { get; private set; }
 
+        public void Commit() => RunGit("commit");
     }
 }
