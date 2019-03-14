@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Gibb
 {
@@ -43,7 +44,11 @@ namespace Gibb
             Subproc.GetOutput("git", arg, Path).Split('\n');
 
         public string GetDiff(string fname)
-            => Subproc.GetOutput("git", "diff --abbrev " + fname, Path);
+        {
+            var diff = Subproc.GetOutput("git", "diff --abbrev " + fname, Path);
+            var split = diff.Split(new[] {'\n'}, 6, StringSplitOptions.None);
+            return split.Length == 6 ? split[5] : diff;
+        }
 
         public void UpdateStatus()
         {
